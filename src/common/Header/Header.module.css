@@ -1,0 +1,62 @@
+.root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: aliceblue;
+    z-index: 1000;
+}
+
+.rootMenu {
+    display: flex;
+    flex-direction: column;
+    /*back-ground-color: burlywood;*/
+}
+
+.root-menu-name {
+    background-color: rgba(138, 43, 226, 0.22);
+}
+
+.item {
+    padding: 10px;
+    max-width: 10rem;
+    cursor: pointer;
+}
+
+.subMenu {
+    > li {
+        position: relative;
+        list-style: none;
+        border-bottom: #888888 0.25px solid;
+        left:-40px;
+        width: 100%;
+    }
+}
+
+.active {
+    position: absolute;
+}
+
+@media (max-width: 768px) {
+    .root {
+        position: fixed; /* Фиксируем хедер */
+        left: -244px; /* Скрываем хедер по умолчанию */
+        transition: left 0.3s ease; /* Анимация появления */
+        width: 250px;
+        height: 70%;
+        flex-direction: column;
+        box-shadow: 2px 0px 5px rgba(0,0,0,0.1); /* Тень */
+        z-index: 1000; /* Поверх других элементов */
+
+        &.active {
+            left: 0;
+        }
+    }
+
+
+}
