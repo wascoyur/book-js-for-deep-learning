@@ -1,18 +1,11 @@
 import { useState } from "react";
-
-declare global {
-  interface Window {
-    tf: {
-      version: {
-        tfjs: string;
-      };
-    };
-  }
-}
+import s from "./TfFetcher.module.css";
+import classNames from "classnames";
 
 export const TfFetcher = () => {
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [tfLoaded, setTfLoaded] = useState(false);
+
   const fetchTf = async () => {
     setLoading(true);
     try {
@@ -34,11 +27,16 @@ export const TfFetcher = () => {
   };
 
   return (
-    <>
-      <button onClick={() => fetchTf()} disabled={loading}>
-        {loading ? "Загрузка..." : "Скачать TF"}
-      </button>
-      {tfLoaded && <p>TensorFlow загружен! ver: {window.tf.version.tfjs}</p>}
-    </>
+    <div className={s.root}>
+      <div
+        className={classNames(s.button, tfLoaded && s.loaded)}
+        onClick={() => fetchTf()}
+      />
+      {tfLoaded ? (
+        <div className={s.note}>TF ver: {tf.version.tfjs}</div>
+      ) : (
+        <div className={s.note}>TF not loaded</div>
+      )}
+    </div>
   );
 };

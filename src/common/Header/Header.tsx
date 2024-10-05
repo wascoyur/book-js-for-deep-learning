@@ -1,16 +1,19 @@
 import s from "./Header.module.css";
 import { useState } from "react";
 import classNames from "classnames";
-import { MenuItemsProps } from "./menuItems.ts";
+import { menuItems, MenuItemsProps } from "../../routing/menuItems.ts";
+import { RootMenuItem } from "../Menu/Menu.tsx";
+import { Logo } from "../Logo/Logo.tsx";
+import { TfFetcher } from "../TfjsFetcher/TfFetcher.tsx";
 
 type HeaderProps = {
-  items: MenuItemsProps[];
+  items?: MenuItemsProps[];
   logo?: React.ReactNode;
 };
 
 // Компонент Header, который принимает массив пунктов меню
 export const Header = (props: HeaderProps) => {
-  const { items, logo } = props;
+  const { items = menuItems, logo = <Logo /> } = props;
   const [showMobileHeader, setShowMobileHeader] = useState<boolean>(false);
   const clickHandler = () => {
     setShowMobileHeader(!showMobileHeader);
@@ -24,6 +27,7 @@ export const Header = (props: HeaderProps) => {
       />
     </div>
   ));
+
   return (
     <div
       className={classNames(s.root, showMobileHeader && s.active)}
@@ -31,48 +35,7 @@ export const Header = (props: HeaderProps) => {
     >
       {logo && logo}
       {rootMenus}
+      <TfFetcher />
     </div>
   );
 };
-
-export const RootMenuItem = (props: MenuItemsProps) => {
-  const { rootMenuName, subMenu } = props;
-  const [menuIsActive, setMenuIsActive] = useState<boolean>(false);
-
-  const handleClick = () => {
-    setMenuIsActive(!menuIsActive);
-  };
-
-  return (
-    <div className={classNames(s.item)} onClick={handleClick}>
-      <div className={s.rootMenuName}>{rootMenuName}</div>
-      {menuIsActive && subMenu && (
-        <ul className={classNames(s.subMenu, menuIsActive && s.active)}>
-          {subMenu.map((subItem) => (
-            <li key={subItem.itemName}>
-              <MenuItem
-                key={subItem.itemName}
-                itemName={subItem.itemName}
-                link={subItem.link}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
-
-type NestedMenuProps = {
-  itemName: string;
-  link: string;
-};
-
-function MenuItem(props: NestedMenuProps) {
-  const { itemName, link } = props;
-  return (
-    <a href={link} className={s.subMenu}>
-      {itemName}
-    </a>
-  );
-}
