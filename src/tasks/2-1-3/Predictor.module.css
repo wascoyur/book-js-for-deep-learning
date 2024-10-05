@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+.spinner {
+  width: unset;
+  height: unset;
+  padding: 0;
+  &:after {
+    border: 7px solid currentColor;
+    border-color: currentColor transparent currentColor transparent;
+  }
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.button-disabled {
+  justify-content: space-between;
+  cursor: auto;
+}
