@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { menuItems, MenuItemsProps } from "../../routing/menuItems.ts";
 import { RootMenuItem } from "../Menu/Menu.tsx";
 import { Logo } from "../Logo/Logo.tsx";
-import { TfFetcher } from "../TfjsFetcher/TfFetcher.tsx";
 
 type HeaderProps = {
   items?: MenuItemsProps[];
@@ -35,7 +34,6 @@ export const Header = (props: HeaderProps) => {
     >
       {logo && logo}
       {rootMenus}
-      <TfFetcher />
     </div>
   );
 };
