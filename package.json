@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@tensorflow/tfjs": "^4.21.0",
+    "@types/papaparse": "^5.3.14",
     "class-names": "^1.0.0",
+    "papaparse": "^5.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"

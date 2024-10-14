@@ -13,8 +13,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --border-cart:0.7rem;
-  --padding-cart:1rem
+  --border-cart-radius:0.7rem;
+  --padding-cart:1rem;
+  --bg-cart-background-color: rgba(180, 180, 180, 0.08);
+
 }
 
 a {

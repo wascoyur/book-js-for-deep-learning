@@ -13,7 +13,10 @@ export const menuItems: MenuItemsProps[] = [
     rootMenuName: "Tasks",
     subMenu: [
       { itemName: "2.1. Предикатор скорости", link: "predicator" },
-      { itemName: "Подпункт 1-2", link: "empty-item" },
+      {
+        itemName: "2.3. Множественная линейная регрессия",
+        link: "multiple-linear-regression",
+      },
     ],
   },
   { rootMenuName: "Menu 2" },

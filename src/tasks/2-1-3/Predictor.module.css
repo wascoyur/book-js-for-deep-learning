@@ -19,19 +19,19 @@ h2{
   max-width: 100%;
   min-height: 7rem;
   background-color: rgba(136, 136, 136, 0.56);
-  border-radius: var(--border-cart);
+  border-radius: var(--border-cart-radius);
   padding: var(--padding-cart);
 }
 
 .output {
   background-color: antiquewhite;
-  border-radius: var(--border-cart);
+  border-radius: var(--border-cart-radius);
   padding: var(--padding-cart);
 }
 
 .test{
   background-color: beige;
-  border-radius: var(--border-cart);
+  border-radius: var(--border-cart-radius);
   padding: var(--padding-cart);
 }
 
@@ -66,6 +66,6 @@ h2{
 
 .control_model{
   background-color: rgba(255, 127, 80, 0.58);
-  border-radius: var(--border-cart);
+  border-radius: var(--border-cart-radius);
   padding: var(--padding-cart);
 }

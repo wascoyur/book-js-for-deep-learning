@@ -1,0 +1,25 @@
+.root {
+  border-radius: var(--border-cart-radius);
+  padding: var(--padding-cart);
+  background-color: var(--bg-cart-background-color);
+    --btn-border-color: rgba(136, 136, 136, 0.56);
+  font-size: 0.8rem;
+}
+
+.download_address {
+  border-radius: var(--border-cart-radius);
+  padding: var(--padding-cart);
+  border: 2px solid rgba(180, 180, 180, 0.08);
+  background-color: var(--bg-cart-background-color);
+}
+
+.label_current_address{
+    border: 0.25px solid #888888;
+    border-radius: 0.25rem;
+    padding: 0.01rem 0.25rem ;
+}
+
+.btn{
+   border: 1px solid var(--btn-border-color);
+   border-radius: var(--border-cart-radius);
+}
