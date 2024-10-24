@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ds from "./DataDownloader.module.css";
 import Button from "../../common/Button/Button.tsx";
 import {
@@ -7,7 +7,7 @@ import {
   SRC_TRAIN_DATA,
   SRC_TRAIN_TARGET,
 } from "./CONST_ADDRESSES.ts";
-import Papa from "papaparse";
+import { dataLoader, stringValToFloat, useDataLoader } from "./helpers.ts";
 
 type DataDownloaderProps = {
   currenAddress?: string;
@@ -40,59 +40,51 @@ export const DataDownloader = (props: DataDownloaderProps) => {
 };
 
 const ControlPanel = () => {
-  const statrtDownload = async () => {
-    const data = await LoadData([
+  const [csvData, setCsvData] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const startDownload = async () => {
+    const urls = [
       SRC_TRAIN_DATA,
       SRC_TRAIN_TARGET,
       SRC_TEST_DATA,
       SRC_TEST_TARGET,
-    ]);
-    console.log(data);
+    ];
+    const urlNames = ["trainData", "trainTarget", "testData", "testTarget"];
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const downloadPromises = urls.map((url, index) =>
+        dataLoader([url]).then((data) => ({ [urlNames[index]]: data })),
+      );
+
+      const results = await Promise.all(downloadPromises);
+
+      const newCsvData = results.reduce(
+        (acc, result) => ({ ...acc, ...result }),
+        {},
+      );
+      setCsvData(newCsvData);
+    } catch (err) {
+      setError("Failed to download data. Please try again.");
+      console.error("Download error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <div>
       <Button
         className={ds.btn}
         label="Start Download"
-        onClick={statrtDownload}
+        onClick={() => startDownload()}
       />
       <Button className={ds.btn} label="Parce Data" />
       <Button className={ds.btn} label="Start Learn" />
     </div>
   );
-};
-
-const shuffle = (data: number[]) => {
-  let counter = data.length;
-  let temp = 0;
-  let index = 0;
-  const target: typeof data = [];
-  while (counter > 0) {
-    index = (Math.random() * counter) | 0;
-    counter--;
-    // data:
-    temp = data[counter];
-    data[counter] = data[index];
-    data[index] = temp;
-    // target:
-    temp = target[counter];
-    target[counter] = target[index];
-    target[index] = temp;
-  }
-  return target;
-};
-
-const LoadData = async (addresses: string[]) => {
-  const results = await Promise.all(
-    addresses.map((addr) => {
-      return new Promise((resolve) => {
-        Papa.parse(addr, {
-          download: true,
-          header: true,
-          complete: (results: unknown) => resolve(results),
-        });
-      });
-    }),
-  );
-  return results;
 };

@@ -1,4 +1,4 @@
-import Papa, { ParseError, ParseMeta, ParseResult } from "papaparse";
+import { ParseError, ParseMeta } from "papaparse";
 
 const shuffle = <T>(data: T[]): T[] => {
   let counter = data.length;
@@ -25,7 +25,7 @@ const shuffle = <T>(data: T[]): T[] => {
   return target;
 };
 
-const stringValToFloat = <T extends Record<string, string>>(
+export const stringValToFloat = <T extends BostonHousingData[]>(
   array: T[],
 ): HousingDataRow[] => {
   const dataRow = array.map((row) => {
@@ -63,24 +63,23 @@ export type BostonHousingData = {
   meta: ParseMeta;
 };
 
-export const dataLoader = async (
-  addresses: string[],
-): Promise<BostonHousingData[]> => {
-  const results = await Promise.all(
-    addresses.map((addr) => {
-      return new Promise<ParseResult<Record<string, string>>>((resolve) => {
-        Papa.parse<Record<string, string>>(addr, {
-          download: true,
-          header: true,
-          complete: (results) => {
-            const { data, errors, meta } = results;
-            shuffle(data);
-            const convertedData = stringValToFloat(data);
-            return resolve({ data: data, meta, errors });
-          },
-        });
-      });
-    }),
-  );
-  return results;
+export const dataLoader = async (urls: string[]): Promise<string> => {
+  const url = urls[0];
+  const config = {
+    headers: {
+      "content-type": "text/csv;charset=UTF-8",
+    },
+  };
+
+  try {
+    const response = await fetch(url, config);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const csvData = await response.text();
+    return csvData;
+  } catch (error) {
+    console.error("Error loading data:", error);
+    throw error; // Перебрасываем ошибку, чтобы вызывающий код мог ее обработать
+  }
 };

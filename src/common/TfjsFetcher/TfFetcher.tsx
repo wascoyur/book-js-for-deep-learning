@@ -33,7 +33,7 @@ export const TfFetcher = () => {
         onClick={() => fetchTf()}
       />
       {tfLoaded ? (
-        <div className={s.note}>TF ver: {tf.version.tfjs}</div>
+        <div className={s.note}>TF ver: {"window.tf.version.tfjs"}</div>
       ) : (
         <div className={s.note}>TF not loaded</div>
       )}
